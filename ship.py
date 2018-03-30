@@ -22,6 +22,8 @@ class Ship(Sprite):
 		self.rect.bottom = self.screenRect.bottom - 10
 
 		self.center = float(self.rect.centerx)
+		self.right = self.screenRect.right
+		self.left = self.screenRect.left
 
 		#Movement flag
 		self.movingRight = False
@@ -32,7 +34,13 @@ class Ship(Sprite):
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
 			self.center += self.setting.shipSpeed
+		elif self.movingRight and self.rect.right >= self.screenRect.right:
+			self.center = self.left
+			self.center += self.setting.shipSpeed
 		if self.movingLeft and self.rect.left > 1:
+			self.center -= self.setting.shipSpeed
+		elif self.movingLeft and self.rect.left <= 1:
+			self.center = self.right
 			self.center -= self.setting.shipSpeed
 
 		#update rect object from self.center
