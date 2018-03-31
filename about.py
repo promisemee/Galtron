@@ -43,7 +43,7 @@ def prepAbout(setting, screen):
 	global image, rect
 	image = pg.image.load('gfx/about.png')
 	rect = image.get_rect()
-	
+
 
 def drawMenu(setting, screen, sb, menuBtn, quitBtn, sel):
 	"""Draw the menu and all of its elements"""

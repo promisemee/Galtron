@@ -1,6 +1,5 @@
 #Created by Matt Boan
 import sys
-from _pickle import load
 import pygame as pg
 from pygame.sprite import Group
 
@@ -8,6 +7,7 @@ from pygame.sprite import Group
 from settings import Settings
 import gameFunctions as gf #Event checker and update screen
 import mainMenu as mm #Main menu
+import playMenu as pm #choosing ship color
 import twoPlayer as tp #two player mode
 import about as About
 from ship import Ship
@@ -32,9 +32,12 @@ def runGame():
 	playBtn = Button(setting, screen, "PLAY", 200)
 	menuBtn = Button(setting, screen, "MENU", 250)
 	twoPlayBtn = Button(setting, screen, "2PVS", 250)
-	setBtnbtn = Button(setting, screen, "SETTING", 400)
+	#setBtnbtn = Button(setting, screen, "SETTING", 300)
 	aboutBtn = Button(setting, screen, "ABOUT", 300)
-	quitBtn = Button(setting, screen, "QUIT", 350)
+	quitBtn = Button(setting, screen, "QUIT", 400)
+	greyBtn = Button(setting, screen, "GREY", 200)
+	redBtn = Button(setting, screen, "RED", 250)
+	blueBtn = Button(setting, screen, "BLUE", 300)
 	#make slector for buttons
 	sel = Selector(setting, screen)
 	sel.rect.x = playBtn.rect.x + playBtn.width + 10
@@ -46,7 +49,7 @@ def runGame():
 
 	#Make a ship
 	ship = Ship(setting, screen)
-	#Ships for two player 
+	#Ships for two player
 	ship1 = Ship(setting, screen)
 	ship2 = Ship(setting, screen)
 
@@ -59,11 +62,6 @@ def runGame():
 	gf.createFleet(setting, screen, ship, aliens)
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
-	#plays bgm
-	pg.mixer.music.load("galtron.mp3")
-	pg.mixer.music.set_volume(0.25)
-	pg.mixer.music.play(-1)
-
 	runGame = True
 
 	#Set the two while loops to start mainMenu first
@@ -72,6 +70,10 @@ def runGame():
 		while stats.mainMenu:
 			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
 			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, sel)
+
+		while stats.playMenu:
+			pm.checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
+			pm.drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel)
 
 		while stats.mainGame:
 			#Game functions
@@ -97,7 +99,5 @@ def runGame():
 		while stats.mainGame:
 			if runGame == True:
 				print("test")
-#init bgm mixer
-pg.mixer.pre_init(44100,16,2,4096)
 #run the runGame method to run the game
 runGame()

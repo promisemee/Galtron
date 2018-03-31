@@ -1,4 +1,5 @@
 import pygame as pg
+from playMenu import *
 from pygame.sprite import *
 
 class Ship(Sprite):
@@ -10,7 +11,7 @@ class Ship(Sprite):
 		self.setting = setting
 
 		#Load the ship image and its rect.
-		self.image = pg.image.load('gfx/player.bmp')
+		self.image = pg.image.load(checkColor()) #'gfx/player.bmp'
 		self.rect = self.image.get_rect()
 		self.screenRect = screen.get_rect()
 
@@ -22,6 +23,8 @@ class Ship(Sprite):
 		self.rect.bottom = self.screenRect.bottom - 10
 
 		self.center = float(self.rect.centerx)
+		self.right = self.screenRect.right
+		self.left = self.screenRect.left
 
 		#Movement flag
 		self.movingRight = False
@@ -29,6 +32,7 @@ class Ship(Sprite):
 
 
 	def update(self):
+		self.image = pg.image.load(checkColor())
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
 			self.center += self.setting.shipSpeed
